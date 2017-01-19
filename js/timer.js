@@ -4,12 +4,16 @@ var radius = 8;
 var marginTop = 50;
 var marginLeft = 30;
 
+const endTime = new Date(2017,0,21,1,1,1);
+var curShowTimeSeconds = 0;
+
+curShowTimeSeconds = getCurrentShowTimeSeconds();
 render(context);
 
 function render(cxt) {
-	var hours = 12;
-	var minutes = 34;
-	var seconds = 56;
+	var hours = parseInt(curShowTimeSeconds / 3600);
+	var minutes = parseInt((curShowTimeSeconds - hours * 3600) / 60);
+	var seconds = parseInt(curShowTimeSeconds % 60);
 
 	renderDigit(marginLeft, marginTop, parseInt(hours/10), cxt);
 	renderDigit(marginLeft+15*(radius+1), marginTop, parseInt(hours%10), cxt);
@@ -35,4 +39,12 @@ function renderDigit(x, y, num, cxt) {
 			}
 		}
 	}
+}
+
+function getCurrentShowTimeSeconds() {
+	var curTime = new Date();
+	var ret = endTime.getTime() - curTime.getTime();
+	ret = Math.round(ret / 1000);
+	console.log(ret);
+	return ret >= 0 ? ret : 0;
 }
